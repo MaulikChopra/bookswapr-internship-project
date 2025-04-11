@@ -96,7 +96,7 @@ app.post('/api/login', async (req, res) => {
     // Create and assign a token
     const token = jwt.sign({ userId: user.id, role: user.role }, secretKey);
 
-    return res.status(200).json({ token, role: user.role });
+    return res.status(200).json({ token, role: user.role, userId: user.id });
   } catch (error) {
     console.error('Login error:', error);
     return res.status(500).json({ message: 'Login failed.', error: error.message });
@@ -122,6 +122,7 @@ app.post('/api/books', async (req, res) => {
     const newBook = {
       ...book,
       id: books.length > 0 ? Math.max(...books.map(b => b.id)) + 1 : 1,
+      ownerId: book.ownerId // Include the ownerId from the request body
     };
 
     books.push(newBook);

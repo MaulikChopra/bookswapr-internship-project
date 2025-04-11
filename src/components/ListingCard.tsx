@@ -4,6 +4,7 @@ import React from 'react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
+import { useUser } from '@/components/UserContext';
 
 interface ListingCardProps {
   id: string;
@@ -15,6 +16,7 @@ interface ListingCardProps {
   isRented?: boolean;
   onMarkAsRented: () => void;
   onDelete: (id: string) => void;
+  ownerId: number;
 }
 
 const ListingCard: React.FC<ListingCardProps> = ({
@@ -26,17 +28,28 @@ const ListingCard: React.FC<ListingCardProps> = ({
   coverImage,
   isRented,
   onMarkAsRented,
-  onDelete
+  onDelete,
+  ownerId
 }) => {
   const { toast } = useToast();
+  const { user } = useUser();
 
   const handleMarkAsRented = async () => {
+      if (!user || user.id !== ownerId) {
+        toast({
+          variant: 'destructive',
+          title: 'Error!',
+          description: 'You are not authorized to mark this book as rented.',
+        });
+        return;
+      }
     try {
       const response = await fetch(`/api/books/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
+        body: JSON.stringify({isRented: true}),
       });
 
       if (!response.ok) {
@@ -60,6 +73,14 @@ const ListingCard: React.FC<ListingCardProps> = ({
   };
 
   const handleDelete = () => {
+     if (!user || user.id !== ownerId) {
+        toast({
+          variant: 'destructive',
+          title: 'Error!',
+          description: 'You are not authorized to delete this book.',
+        });
+        return;
+      }
     onDelete(id);
   };
 
@@ -86,9 +107,18 @@ const ListingCard: React.FC<ListingCardProps> = ({
             Rented
           </Button>
         ) : (
-          <Button onClick={handleMarkAsRented}>Mark as Rented</Button>
+           <Button 
+              onClick={handleMarkAsRented}
+              disabled={!user || user.id !== ownerId}
+              >
+            Mark as Rented
+          </Button>
         )}
-        <Button variant="outline" onClick={handleDelete}>
+         <Button 
+            variant="outline" 
+            onClick={handleDelete}
+            disabled={!user || user.id !== ownerId}
+          >
           Delete
         </Button>
       </CardFooter>

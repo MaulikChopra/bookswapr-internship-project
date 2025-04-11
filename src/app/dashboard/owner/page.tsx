@@ -7,6 +7,7 @@ import ListingCard from '@/components/ListingCard';
 import FilterBar from '@/components/FilterBar';
 import { Book } from '@/types/Book'; // Assuming you have a Book interface
 import { Button } from "@/components/ui/button"
+import { useUser } from '@/components/UserContext';
 
 const OwnerDashboard = () => {
   const [books, setBooks] = useState<Book[]>([]);
@@ -14,6 +15,7 @@ const OwnerDashboard = () => {
   const [error, setError] = useState<string | null>(null);
   const [selectedGenre, setSelectedGenre] = useState<string | null>(null);
   const [selectedLocation, setSelectedLocation] = useState<string | null>(null);
+  const { user } = useUser();
 
   useEffect(() => {
     const fetchBooks = async () => {
@@ -24,7 +26,12 @@ const OwnerDashboard = () => {
           throw new Error('Failed to fetch books');
         }
         const data = await response.json();
-        setBooks(data);
+         if (user) {
+          const ownerBooks = data.filter((book: Book) => book.ownerId === user.id);
+          setBooks(ownerBooks);
+        } else {
+          setBooks([]);
+        }
         setError(null);
       } catch (err: any) {
         setError(err.message || 'Failed to fetch books');
@@ -35,7 +42,7 @@ const OwnerDashboard = () => {
     };
 
     fetchBooks();
-  }, []);
+  }, [user]);
 
   const handleDeleteBook = async (id: string) => {
     try {
@@ -138,6 +145,7 @@ const OwnerDashboard = () => {
               isRented={book.isRented}
               onMarkAsRented={() => handleMarkAsRented(String(book.id))}
               onDelete={handleDeleteBook}
+              ownerId={book.ownerId}
             />
           ))}
         </div>

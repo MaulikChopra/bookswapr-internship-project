@@ -11,6 +11,7 @@ import { Button } from '@/components/ui/button';
 import { Icons } from '@/components/icons';
 import { useRouter } from 'next/navigation';
 import { useToast } from '@/hooks/use-toast';
+import { useUser } from '../UserContext';
 
 const loginSchema = z.object({
   username: z.string().min(3, {
@@ -26,6 +27,7 @@ type LoginValues = z.infer<typeof loginSchema>;
 const LoginForm = () => {
   const router = useRouter();
   const { toast } = useToast();
+  const { setUser } = useUser();
 
   const form = useForm<LoginValues>({
     resolver: zodResolver(loginSchema),
@@ -49,6 +51,11 @@ const LoginForm = () => {
         const data = await response.json();
         localStorage.setItem('token', data.token);
         localStorage.setItem('role', data.role);
+
+        setUser({
+          id: data.userId,
+          role: data.role
+        });
 
         toast({
           title: "Login Successful",

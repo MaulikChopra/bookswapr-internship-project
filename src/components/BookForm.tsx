@@ -15,6 +15,7 @@ import * as z from 'zod';
 import { useToast } from '@/hooks/use-toast';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Book } from '@/types/Book';
+import { useUser } from '@/components/UserContext';
 
 const FormSchema = z.object({
   title: z.string().min(2, { message: 'Title must be at least 2 characters.' }),
@@ -35,6 +36,7 @@ const BookForm: React.FC<BookFormProps> = ({ onSuccess }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
   const [isOpen, setIsOpen] = useState(false);
+   const { user } = useUser();
 
   const form = useForm<FormValues>({
     resolver: zodResolver(FormSchema),
@@ -56,7 +58,7 @@ const BookForm: React.FC<BookFormProps> = ({ onSuccess }) => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify({...data, ownerId: user?.id}),
       });
 
       if (!response.ok) {
