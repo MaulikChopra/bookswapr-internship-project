@@ -37,7 +37,7 @@ const LoginForm = () => {
 
   const onSubmit = async (values: LoginValues) => {
     try {
-      const response = await fetch('/api/login', {
+      const response = await fetch('http://localhost:3001/api/login', { // Use backend URL
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -48,12 +48,21 @@ const LoginForm = () => {
       if (response.ok) {
         const data = await response.json();
         localStorage.setItem('token', data.token);
+        localStorage.setItem('role', data.role);
 
         toast({
           title: "Login Successful",
           description: "Welcome back!",
         });
-        router.push('/dashboard/seeker'); // Assuming seeker dashboard after login
+        
+        // Redirect based on user role
+        if (data.role === 'seeker') {
+          router.push('/dashboard/seeker');
+        } else if (data.role === 'owner') {
+          router.push('/dashboard/owner');
+        } else {
+          router.push('/'); // Or handle other roles/cases
+        }
       } else {
         const errorData = await response.json();
         toast({

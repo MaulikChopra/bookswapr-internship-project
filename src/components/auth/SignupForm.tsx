@@ -52,7 +52,7 @@ const SignupForm = () => {
 
   const onSubmit = async (values: SignupValues) => {
     try {
-      const response = await fetch('/api/signup', {
+      const response = await fetch('http://localhost:3001/api/signup', { // Use backend URL
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -73,7 +73,6 @@ const SignupForm = () => {
           description: errorData.message || "Signup failed.",
           variant: "destructive",
         });
-        form.setError('root', { type: 'manual', message: errorData.message || 'Signup failed.' });
       }
     } catch (error) {
       toast({
@@ -81,7 +80,6 @@ const SignupForm = () => {
         description: "An error occurred during signup.",
         variant: "destructive",
       });
-      form.setError('root', { type: 'manual', message: 'An error occurred during signup.' });
     }
   };
 

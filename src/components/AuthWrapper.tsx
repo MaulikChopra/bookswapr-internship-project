@@ -8,9 +8,9 @@ const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-    console.log("token from local storage", token);
-    if (!token) {
-      console.log("no token, redirecting to login");
+    const role = localStorage.getItem('role');
+
+    if (!token || !role) {
       router.push('/login');
     }
   }, [router]);
