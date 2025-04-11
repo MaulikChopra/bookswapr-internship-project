@@ -1,4 +1,3 @@
-
 "use client";
 
 import React from 'react';
@@ -139,8 +138,7 @@ const SignupForm = () => {
                     </SelectItem>
                   ))}
                 </SelectContent>
-              </Select>
-              <FormMessage />
+              </FormMessage />
             </FormItem>
           )}
         />
