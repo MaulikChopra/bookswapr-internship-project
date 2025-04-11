@@ -13,8 +13,8 @@ import { useRouter } from 'next/navigation';
 import { useToast } from '@/hooks/use-toast';
 
 const loginSchema = z.object({
-  email: z.string().email({
-    message: "Invalid email address.",
+  username: z.string().min(3, {
+    message: "Invalid username.",
   }),
   password: z.string().min(6, {
     message: "Password must be at least 6 characters.",
@@ -30,67 +30,82 @@ const LoginForm = () => {
   const form = useForm<LoginValues>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      email: "",
+      username: "",
       password: "",
     },
   });
 
-  const onSubmit = (values: LoginValues) => {
-    // Mock login logic
-    console.log("Login values:", values);
+  const onSubmit = async (values: LoginValues) => {
+    try {
+      const response = await fetch('/api/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(values),
+      });
 
-    // In a real application, you would authenticate against a backend service.
-    // For this example, we'll just mock a successful login and redirect.
+      if (response.ok) {
+        const data = await response.json();
+        localStorage.setItem('token', data.token);
 
-    // Assuming the user is a "seeker" for simplicity
-    toast({
-      title: "Login Successful",
-      description: `Welcome back, ${values.email}!`,
-    });
-    router.push('/dashboard/seeker');
+        toast({
+          title: "Login Successful",
+          description: "Welcome back!",
+        });
+        router.push('/dashboard/seeker'); // Assuming seeker dashboard after login
+      } else {
+        const errorData = await response.json();
+        toast({
+          title: "Login Failed",
+          description: errorData.message || "Invalid credentials.",
+          variant: "destructive",
+        });
+      }
+    } catch (error) {
+      toast({
+        title: "Login Error",
+        description: "An error occurred during login.",
+        variant: "destructive",
+      });
+    }
   };
 
-  return (
-    <>
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <>
-                <FormItem>
-                  <FormLabel>Email</FormLabel>
-                  <FormControl>
-                    <Input placeholder="johndoe@example.com" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              </>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="password"
-            render={({ field }) => (
-              <>
-                <FormItem>
-                  <FormLabel>Password</FormLabel>
-                  <FormControl>
-                    <Input type="password" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              </>
-            )}
-          />
-          <Button type="submit">
-            Login <Icons.login className="ml-2 h-4 w-4" />
-          </Button>
-        </form>
-      </Form>
-    </>
-  );
+  return (<>
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+        <FormField
+          control={form.control}
+          name="username"
+          render={({ field }) => (<>
+            <FormItem>
+              <FormLabel>Username</FormLabel>
+              <FormControl>
+                <Input placeholder="johndoe" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          </>)}
+        />
+        <FormField
+          control={form.control}
+          name="password"
+          render={({ field }) => (<>
+            <FormItem>
+              <FormLabel>Password</FormLabel>
+              <FormControl>
+                <Input type="password" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          </>)}
+        />
+        <Button type="submit">
+          Login <Icons.login className="ml-2 h-4 w-4" />
+        </Button>
+      </form>
+    </Form>
+  </>);
 };
 
 export default LoginForm;

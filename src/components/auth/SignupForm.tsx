@@ -1,6 +1,6 @@
 "use client";
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
@@ -8,10 +8,7 @@ import * as z from 'zod';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Button } from '@/components/ui/button';
-import { Icons } from '@/components/icons';
-import { useRouter } from 'next/navigation';
-import { useToast } from '@/hooks/use-toast';
+import { Button } from '../ui/button';
 
 const roleOptions = [
   { value: 'owner', label: 'Book Owner' },
@@ -22,57 +19,70 @@ const signupSchema = z.object({
   name: z.string().min(2, {
     message: "Name must be at least 2 characters.",
   }),
-  email: z.string().email({
-    message: "Invalid email address.",
-  }),
-  phone: z.string().regex(/^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/, {
-    message: "Invalid phone number.",
-  }),
+  username: z.string().min(4, {
+    message: "Username must be at least 4 characters.",
+  }),  
   password: z.string().min(6, {
     message: "Password must be at least 6 characters.",
-  }),
-  role: z.enum(['owner', 'seeker'], {
-    required_error: "Please select a role.",
   }),
 });
 
 type SignupValues = z.infer<typeof signupSchema>;
 
 const SignupForm = () => {
-  const router = useRouter();
-  const { toast } = useToast();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [signupSuccess, setSignupSuccess] = useState(false);
   const form = useForm<SignupValues>({
     resolver: zodResolver(signupSchema),
     defaultValues: {
       name: "",
-      email: "",
-      phone: "",
+      username: "",
       password: "",
-      role: "seeker",
     },
   });
 
-  const onSubmit = (values: SignupValues) => {
-    // Mock signup logic
-    console.log("Signup values:", values);
-    toast({
-      title: "Signup Successful",
-      description: `Welcome, ${values.name}!`,
-    });
+  const onSubmit = async (values: SignupValues) => {
+    setIsSubmitting(true);
+    try {
+      const response = await fetch('/api/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(values),
+      });
 
-    // Redirect to appropriate dashboard after successful signup
-    router.push(`/dashboard/${values.role}`);
+      if (response.ok) {
+        setSignupSuccess(true);
+        // Optionally, you can automatically redirect to the login page after a delay
+        // setTimeout(() => window.location.href = '/login', 3000);
+      } else {
+        const errorData = await response.json();
+        form.setError('root', { type: 'manual', message: errorData.message || 'Signup failed.' });
+      }
+    } catch (error) {
+      form.setError('root', { type: 'manual', message: 'An error occurred during signup.' });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
     <>
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-          <FormField
-            control={form.control}
-            name="name"
-            render={({ field }) => (
-              <>
+      {signupSuccess ? (
+        <div className="mt-4 text-green-500">
+          Signup successful! Please <a href="/login" className="text-blue-500 hover:underline">login</a>.
+        </div>
+      ) : (
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+            {form.formState.error?.root && (
+              <div className="text-red-500">{form.formState.error.root.message}</div>
+            )}
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
                 <FormItem>
                   <FormLabel>Name</FormLabel>
                   <FormControl>
@@ -80,24 +90,21 @@ const SignupForm = () => {
                   </FormControl>
                   <FormMessage />
                 </FormItem>
-              </>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="username"
+              render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email</FormLabel>
+                  <FormLabel>Username</FormLabel>
                   <FormControl>
-                    <Input placeholder="johndoe@example.com" {...field} />
+                    <Input placeholder="johndoe" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
-              </>
-            )}
-          />
+              )}
+            />
           <FormField
             control={form.control}
             name="phone"
@@ -128,37 +135,12 @@ const SignupForm = () => {
               </>
             )}
           />
-          <FormField
-            control={form.control}
-            name="role"
-            render={({ field }) => (
-              <>
-                <FormItem>
-                  <FormLabel>Role</FormLabel>
-                  <Select onValueChange={field.onChange} defaultValue={field.value}>
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select a role" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      {roleOptions.map((role) => (
-                        <SelectItem key={role.value} value={role.value}>
-                          {role.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                    <FormMessage />
-                  </Select>
-                </FormItem>
-              </>
-            )}
-          />
-          <Button type="submit">
-            Sign Up <Icons.signup className="ml-2 h-4 w-4" />
-          </Button>
-        </form>
-      </Form>
+            <Button type="submit" disabled={isSubmitting} >
+              {isSubmitting ? 'Signing Up...' : 'Sign Up'}
+            </Button>
+          </form>
+        </Form>
+      )}
     </>
   );
 };
