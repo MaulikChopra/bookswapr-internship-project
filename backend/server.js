@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken');
 
 const app = express();
 const port = 3001;
-const secretKey = 'your-secret-key'; // Replace with a strong secret key
+const secretKey = '1234'; // Replace with a strong secret key
 
 
 app.use(cors());
@@ -38,6 +38,8 @@ async function writeData(filePath, data) {
 
 // User Auth Routes
 app.post('/api/signup', async (req, res) => {
+// Suggested code may be subject to a license. Learn more: ~LicenseLog:2203788181.
+  console.log("/api/signup called")
   try {
     const { username, password, name, phone, role } = req.body;
 
