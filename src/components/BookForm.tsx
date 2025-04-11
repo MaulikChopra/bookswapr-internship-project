@@ -13,7 +13,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 import { useToast } from '@/hooks/use-toast';
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Book } from '@/types/Book';
 
 const FormSchema = z.object({
   title: z.string().min(2, { message: 'Title must be at least 2 characters.' }),
@@ -26,7 +27,11 @@ const FormSchema = z.object({
 
 type FormValues = z.infer<typeof FormSchema>;
 
-const BookForm: React.FC = () => {
+interface BookFormProps {
+  onSuccess: (book: Book) => void;
+}
+
+const BookForm: React.FC<BookFormProps> = ({ onSuccess }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
   const [isOpen, setIsOpen] = useState(false);
@@ -59,12 +64,15 @@ const BookForm: React.FC = () => {
         throw new Error(errorData.message || 'Failed to add book');
       }
 
+      const newBook = await response.json();
+
       toast({
         title: 'Success!',
         description: 'Book added successfully.',
       });
       setIsOpen(true);
-    
+      onSuccess(newBook);
+
     } catch (error: any) {
       toast({
         variant: 'destructive',

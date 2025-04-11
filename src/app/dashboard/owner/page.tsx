@@ -1,7 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
-import { useQuery, useMutation, useQueryClient } from 'react-query';
+import React, { useState, useEffect } from 'react';
 import ProfileDropdown from '@/components/ProfileDropdown';
 import BookForm from '@/components/BookForm';
 import ListingCard from '@/components/ListingCard';
@@ -10,42 +9,81 @@ import { Book } from '@/types/Book'; // Assuming you have a Book interface
 import { Button } from "@/components/ui/button"
 
 const OwnerDashboard = () => {
-  const queryClient = useQueryClient();
+  const [books, setBooks] = useState<Book[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [selectedGenre, setSelectedGenre] = useState<string | null>(null);
   const [selectedLocation, setSelectedLocation] = useState<string | null>(null);
 
-  const { isLoading, error, data: books } = useQuery<Book[]>('books', async () => {
-    const response = await fetch('/api/books');
-    if (!response.ok) {
-      throw new Error('Failed to fetch books');
-    }
-    return response.json();
-  });
+  useEffect(() => {
+    const fetchBooks = async () => {
+      setLoading(true);
+      try {
+        const response = await fetch('/api/books');
+        if (!response.ok) {
+          throw new Error('Failed to fetch books');
+        }
+        const data = await response.json();
+        setBooks(data);
+        setError(null);
+      } catch (err: any) {
+        setError(err.message || 'Failed to fetch books');
+        setBooks([]);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  const deleteBookMutation = useMutation(
-    async (id: string) => {
+    fetchBooks();
+  }, []);
+
+  const handleDeleteBook = async (id: string) => {
+    try {
       const response = await fetch(`/api/books/${id}`, {
         method: 'DELETE',
       });
       if (!response.ok) {
         throw new Error('Failed to delete book');
       }
-      return;
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries('books');
-        alert('Book deleted successfully');
-      },
-      onError: (error: Error) => {
-        alert(`Error deleting book: ${error.message}`);
-      },
+      // Optimistically update the UI
+      setBooks(prevBooks => prevBooks.filter(book => String(book.id) !== id));
+      alert('Book deleted successfully');
+    } catch (err: any) {
+      alert(`Error deleting book: ${err.message}`);
     }
-  );
+  };
 
-  const handleMarkAsRented = (id: string) => {
-    // Assuming ListingCard handles the PUT request, just invalidate cache here
-    queryClient.invalidateQueries('books');
+  const handleMarkAsRented = async (id: string) => {
+    try {
+      const response = await fetch(`/api/books/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+  
+      if (!response.ok) {
+        throw new Error('Failed to mark book as rented');
+      }
+  
+      // Update book state to reflect being rented
+      setBooks(prevBooks => {
+        return prevBooks.map(book => {
+          if (String(book.id) === id) {
+            return { ...book, isRented: true }; // Optimistically update
+          }
+          return book;
+        });
+      });
+  
+      alert('Book marked as rented successfully.');
+    } catch (err: any) {
+      alert(`Error marking book as rented: ${err.message}`);
+    }
+  };
+
+  const handleBookAdded = (newBook: Book) => {
+    setBooks(prevBooks => [...prevBooks, newBook]);
   };
 
   const filteredBooks = React.useMemo(() => {
@@ -56,7 +94,7 @@ const OwnerDashboard = () => {
       filtered = filtered.filter(book => book.genre === selectedGenre);
     }
     if (selectedLocation) {
-      filtered = filtered.filter(book => book.location === selectedLocation);
+      filtered = filtered.filter(book => book.city === selectedLocation);
     }
     return filtered;
   }, [books, selectedGenre, selectedLocation]);
@@ -68,7 +106,7 @@ const OwnerDashboard = () => {
       </div>
       <h1 className="text-2xl font-bold mb-4">Owner Dashboard</h1>
 
-      <BookForm onSuccess={() => queryClient.invalidateQueries('books')} />
+      <BookForm onSuccess={handleBookAdded} />
 
       <div className="my-4">
         <FilterBar
@@ -79,10 +117,10 @@ const OwnerDashboard = () => {
         />
       </div>
 
-      {isLoading ? (
+      {loading ? (
         <p>Loading books...</p>
       ) : error ? (
-        <p>Error: {error.message}</p>
+        <p>Error: {error}</p>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {filteredBooks.map((book) => (
@@ -96,7 +134,7 @@ const OwnerDashboard = () => {
               coverImage={book.coverImage}
               isRented={book.isRented}
               onMarkAsRented={() => handleMarkAsRented(String(book.id))}
-              onDelete={deleteBookMutation.mutate}
+              onDelete={handleDeleteBook}
             />
           ))}
         </div>
