@@ -26,7 +26,7 @@ const OwnerDashboard = () => {
           throw new Error('Failed to fetch books');
         }
         const data = await response.json();
-         if (user) {
+        if (user) {
           const ownerBooks = data.filter((book: Book) => book.ownerId === user.id);
           setBooks(ownerBooks);
         } else {
@@ -67,6 +67,7 @@ const OwnerDashboard = () => {
         headers: {
           'Content-Type': 'application/json',
         },
+        body: JSON.stringify({isRented: true}),
       });
   
       if (!response.ok) {
