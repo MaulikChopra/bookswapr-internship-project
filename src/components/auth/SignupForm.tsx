@@ -53,7 +53,7 @@ const SignupForm = () => {
   const onSubmit = async (values: SignupValues) => {
     console.log("sending post req to signup")
     try {
-      const response = await fetch('http://localhost:3001/api/signup', { // Use backend URL
+      const response = await fetch('/api/signup', { // Use backend URL
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

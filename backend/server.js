@@ -7,9 +7,14 @@ const jwt = require('jsonwebtoken');
 const app = express();
 const port = 3001;
 const secretKey = '1234'; // Replace with a strong secret key
-
+app.listen(3001, '0.0.0.0');
 
 app.use(cors());
+app.use(cors({
+  origin: 'https://9000-idx-studio-1744366685397.cluster-a3grjzek65cxex762e4mwrzl46.cloudworkstations.dev', // frontend origin
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true,
+}));
 app.use(express.json());
 
 const usersFilePath = 'users.json';
@@ -71,6 +76,7 @@ app.post('/api/signup', async (req, res) => {
 });
 
 app.post('/api/login', async (req, res) => {
+  console.log("login called")
   try {
     const { username, password } = req.body;
     const users = await readData(usersFilePath);

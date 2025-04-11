@@ -1,1 +1,18 @@
-[]
+[
+  {
+    "username": "maulik",
+    "password": "$2b$10$y0xVql/xDC8TESLCT/aG6.Xy/VMZesT.OY9rUeJCTlztJLOmy8gn6",
+    "name": "maulik",
+    "phone": "74747474",
+    "role": "owner",
+    "id": 1
+  },
+  {
+    "username": "test",
+    "password": "$2b$10$mKAVQv3j6IZSnRJQYl/Ow.NpOQo2OkRrLmEUlxdoqdnhntu5pbSY2",
+    "name": "test",
+    "phone": "32423423423",
+    "role": "seeker",
+    "id": 2
+  }
+]

@@ -37,7 +37,7 @@ const LoginForm = () => {
 
   const onSubmit = async (values: LoginValues) => {
     try {
-      const response = await fetch('http://localhost:3001/api/login', { // Use backend URL
+      const response = await fetch('/api/login', { // Use backend URL
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
