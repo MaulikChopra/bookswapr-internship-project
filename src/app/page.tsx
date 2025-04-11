@@ -99,7 +99,7 @@ const LandingPage = () => {
             read. Share, exchange, and explore new literary adventures.
           </p>
           <div className="space-x-4">
-            <Link href="/login">
+            <Link href="/d">
               <Button variant="default">Browse Books</Button>
             </Link>
             <Link href="/signup">

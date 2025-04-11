@@ -53,7 +53,7 @@ const OwnerDashboard = () => {
     }
   };
 
-  const handleMarkAsRented = async (id: string) => {
+   const  handleMarkAsRented = async (id: string) => {
     try {
       const response = await fetch(`/api/books/${id}`, {
         method: 'PUT',
@@ -105,10 +105,13 @@ const OwnerDashboard = () => {
         <ProfileDropdown />
       </div>
       <h1 className="text-2xl font-bold mb-4">Owner Dashboard</h1>
-
+      <h2 className='text-xl font-bold mb-4'>Add new book Listing</h2>
       <BookForm onSuccess={handleBookAdded} />
 
       <div className="my-4">
+        <div className='border-b border my-2'></div>
+      <h1 className="text-2xl font-bold my-4">Browse Books</h1>
+
         <FilterBar
           onGenreChange={setSelectedGenre}
           onLocationChange={setSelectedLocation}
