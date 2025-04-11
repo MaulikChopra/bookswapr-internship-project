@@ -10,13 +10,15 @@ import { Label } from '@/components/ui/label';
 import { cn } from '@/lib/utils';
 
 interface FilterBarProps {
-  onFilterChange: (filters: { genre?: string; location?: string }) => void;
+  onGenreChange: (genre: string | null) => void;
+  onLocationChange: (location: string | null) => void;
   genres: string[];
   locations: string[];
 }
 
 const FilterBar: React.FC<FilterBarProps> = ({
-  onFilterChange,
+  onGenreChange,
+  onLocationChange,
   genres,
   locations,
 }) => {
@@ -24,11 +26,12 @@ const FilterBar: React.FC<FilterBarProps> = ({
   const [selectedLocation, setSelectedLocation] = useState<string>('');
 
   useEffect(() => {
-    onFilterChange({
-      genre: selectedGenre === 'All Genres' ? undefined : selectedGenre,
-      location: selectedLocation === 'All Locations' ? undefined : selectedLocation,
-    });
-  }, [selectedGenre, selectedLocation, onFilterChange]);
+    onGenreChange(selectedGenre === 'All Genres' ? null : selectedGenre);
+  }, [selectedGenre, onGenreChange]);
+
+  useEffect(() => {
+    onLocationChange(selectedLocation === 'All Locations' ? null : selectedLocation);
+  }, [selectedLocation, onLocationChange]);
 
   return (
     <div className="flex space-x-4 items-center p-4">
