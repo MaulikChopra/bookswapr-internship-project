@@ -1,6 +1,5 @@
 import {NextRequest, NextResponse} from 'next/server';
 import {promises as fs} from 'fs';
-import * as bcrypt from 'bcrypt';
 
 const usersFilePath = 'users.json';
 
@@ -24,7 +23,7 @@ async function writeUsers(users: any[]) {
 
 export async function POST(req: NextRequest) {
   try {
-    const { username, password } = await req.json();
+    const { username, password, name, phone, role } = await req.json();
 
     let users = await readUsers();
 
@@ -32,12 +31,12 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ message: 'Username already registered.' }, { status: 400 });
     }
 
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
-
     const newUser = {
       username,
-      password: hashedPassword,
+      password,
+      name,
+      phone,
+      role,
       id: users.length > 0 ? Math.max(...users.map(u => u.id)) + 1 : 1,
     };
 
