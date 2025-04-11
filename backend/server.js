@@ -7,7 +7,7 @@ const jwt = require('jsonwebtoken');
 const app = express();
 const port = 3001;
 const secretKey = '1234'; // Replace with a strong secret key
-app.listen(3001, '0.0.0.0');
+
 
 app.use(cors());
 app.use(cors({
@@ -147,7 +147,11 @@ app.put('/api/books/:id', async (req, res) => {
       return res.status(404).json({ message: 'Book not found.' });
     }
 
-    books[bookIndex] = { ...books[bookIndex], ...bookUpdate, id: id }; // Ensure ID is preserved
+    const updatedBook = { ...books[bookIndex], ...bookUpdate, id: id }; // Ensure ID is preserved
+    if (bookUpdate.isRented !== undefined) {
+      updatedBook.isRented = bookUpdate.isRented;
+    }
+    books[bookIndex] = updatedBook
     await writeData(booksFilePath, books);
 
     return res.status(200).json({ message: 'Book updated successfully.' });
