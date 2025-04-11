@@ -26,12 +26,13 @@ const OwnerDashboard = () => {
           throw new Error('Failed to fetch books');
         }
         const data = await response.json();
-        if (user) {
-          const ownerBooks = data.filter((book: Book) => book.ownerId === user.id);
-          setBooks(ownerBooks);
-        } else {
-          setBooks([]);
-        }
+        setBooks(data);
+        // if (user) {
+        //   const ownerBooks = data.filter((book: Book) => book.ownerId === user.id);
+        //   setBooks(ownerBooks);
+        // } else {
+        //   setBooks([]);
+        // }
         setError(null);
       } catch (err: any) {
         setError(err.message || 'Failed to fetch books');
