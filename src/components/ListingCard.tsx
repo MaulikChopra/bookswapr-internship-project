@@ -1,3 +1,4 @@
+
 'use client';
 
 import React from 'react';
@@ -88,12 +89,12 @@ const ListingCard: React.FC<ListingCardProps> = ({
 
   return (
     <Card className="w-full md:w-80">
-      <CardHeader>
+      <CardHeader className="p-0">
         {coverImage && (
           <img
             src={coverImage}
             alt={`${title} Cover`}
-            className="w-full h-48 object-cover rounded-md mb-4"
+            className="w-full h-48 object-cover rounded-md"
             onError={(e: any) => {
               e.target.onerror = null; // Prevent infinite loop
               e.target.src = "https://picsum.photos/200/300"; // Fallback image
@@ -101,13 +102,13 @@ const ListingCard: React.FC<ListingCardProps> = ({
           />
         )}
       </CardHeader>
-      <CardContent>
+      <CardContent className="p-4">
         <h3 className="text-lg font-semibold">{title}</h3>
         <p className="text-gray-500">by {author}</p>
         <p className="mt-2">Genre: {genre}</p>
         <p>Location: {location}</p>
       </CardContent>
-      <CardFooter className="flex justify-between">
+      <CardFooter className="flex justify-between p-4">
          {isOwner && (
           <>
             {isRented ? (
