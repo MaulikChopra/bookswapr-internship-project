@@ -35,6 +35,17 @@ const SeekerDashboard = () => {
     fetchBooks();
   }, []);
 
+  const handleFilterChange = ({
+    genre,
+    location,
+  }: {
+    genre: string | null;
+    location: string | null;
+  }) => {
+    setSelectedGenre(genre);
+    setSelectedLocation(location);
+  };
+
   const filteredBooks = React.useMemo(() => {
     if (!books) return [];
 
@@ -57,8 +68,7 @@ const SeekerDashboard = () => {
 
       <div className="my-4">
         <FilterBar
-          onGenreChange={setSelectedGenre}
-          onLocationChange={setSelectedLocation}
+          onFilterChange={handleFilterChange}
           genres={books ? [...new Set(books.map(book => book.genre))] : []}
           locations={books ? [...new Set(books.map(book => book.city))] : []}
         />

@@ -26,13 +26,12 @@ const OwnerDashboard = () => {
           throw new Error('Failed to fetch books');
         }
         const data = await response.json();
-        setBooks(data);
-        // if (user) {
-        //   const ownerBooks = data.filter((book: Book) => book.ownerId === user.id);
-        //   setBooks(ownerBooks);
-        // } else {
-        //   setBooks([]);
-        // }
+        if (user) {
+          const ownerBooks = data.filter((book: Book) => book.ownerId === user.id);
+          setBooks(ownerBooks);
+        } else {
+          setBooks([]);
+        }
         setError(null);
       } catch (err: any) {
         setError(err.message || 'Failed to fetch books');
@@ -95,6 +94,17 @@ const OwnerDashboard = () => {
     setBooks(prevBooks => [...prevBooks, newBook]);
   };
 
+  const handleFilterChange = ({
+    genre,
+    location,
+  }: {
+    genre: string | null;
+    location: string | null;
+  }) => {
+    setSelectedGenre(genre);
+    setSelectedLocation(location);
+  };
+
   const filteredBooks = React.useMemo(() => {
     if (!books) return [];
 
@@ -122,8 +132,7 @@ const OwnerDashboard = () => {
       <h1 className="text-2xl font-bold my-4">Browse Books</h1>
 
         <FilterBar
-          onGenreChange={setSelectedGenre}
-          onLocationChange={setSelectedLocation}
+          onFilterChange={handleFilterChange}
           genres={books ? [...new Set(books.map(book => book.genre))] : []}
           locations={books ? [...new Set(books.map(book => book.city))] : []}
         />
