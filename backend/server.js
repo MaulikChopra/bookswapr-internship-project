@@ -5,14 +5,13 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 const app = express();
-const port = 3001;
+const port = process.env.PORT || 3001;
 const secretKey = "1234"; // Replace with a strong secret key
 
 app.use(cors());
 app.use(
   cors({
-    origin:
-      "https://9000-idx-studio-1744366685397.cluster-a3grjzek65cxex762e4mwrzl46.cloudworkstations.dev", // frontend origin
+    origin: "https://bookswapr-internship-project.vercel.app/", // frontend origin
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })

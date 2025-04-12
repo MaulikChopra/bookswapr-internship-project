@@ -16,14 +16,18 @@ const nextConfig: NextConfig = {
     "http://0.0.0.0:9002",
     "http://0.0.0.0:3001",
   ],
+  env: {
+    NEXT_PUBLIC_BACKEND_URL: process.env.NEXT_PUBLIC_BACKEND_URL,
+  },
   async rewrites() {
     return [
       {
         source: "/api/:path*",
-        destination: "http://localhost:3001/api/:path*",
+        destination: `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/:path*`, // Will dynamically pick your backend
       },
     ];
   },
+
   images: {
     remotePatterns: [
       {
