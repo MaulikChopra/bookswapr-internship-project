@@ -84,6 +84,8 @@ const ListingCard: React.FC<ListingCardProps> = ({
     onDelete(id);
   };
 
+  const isOwner = user && user.id === ownerId;
+
   return (
     <Card className="w-full md:w-80">
       <CardHeader>
@@ -92,6 +94,10 @@ const ListingCard: React.FC<ListingCardProps> = ({
             src={coverImage}
             alt={`${title} Cover`}
             className="w-full h-48 object-cover rounded-md mb-4"
+            onError={(e: any) => {
+              e.target.onerror = null; // Prevent infinite loop
+              e.target.src = "https://picsum.photos/200/300"; // Fallback image
+            }}
           />
         )}
       </CardHeader>
@@ -102,25 +108,22 @@ const ListingCard: React.FC<ListingCardProps> = ({
         <p>Location: {location}</p>
       </CardContent>
       <CardFooter className="flex justify-between">
-        {isRented ? (
-          <Button disabled variant="destructive">
-            Rented
-          </Button>
-        ) : (
-           <Button 
-              onClick={handleMarkAsRented}
-              disabled={!user || user.id !== ownerId}
-              >
-            Mark as Rented
-          </Button>
+         {isOwner && (
+          <>
+            {isRented ? (
+              <Button disabled variant="destructive">
+                Rented
+              </Button>
+            ) : (
+              <Button onClick={handleMarkAsRented}>
+                Mark as Rented
+              </Button>
+            )}
+            <Button variant="outline" onClick={handleDelete}>
+              Delete
+            </Button>
+          </>
         )}
-         <Button 
-            variant="outline" 
-            onClick={handleDelete}
-            disabled={!user || user.id !== ownerId}
-          >
-          Delete
-        </Button>
       </CardFooter>
     </Card>
   );

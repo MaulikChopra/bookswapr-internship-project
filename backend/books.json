@@ -1,170 +1,167 @@
 [
   {
-    "title": "The Lord of the Rings",
-    "author": "J.R.R. Tolkien",
-    "genre": "Fantasy",
+    "title": "The Secret History",
+    "author": "Donna Tartt",
+    "genre": "Mystery",
     "city": "New York",
     "contact": "john.doe@email.com",
-    "coverImage": "https://images.unsplash.com/photo-1634328660190-1c7c932aa5cc?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "coverImage": "https://m.media-amazon.com/images/I/51w479yV9QL._AC_UF1000,1000_QL80_.jpg",
     "id": 1,
-    "isRented": false
+    "isRented": false,
+    "ownerId": 1
   },
   {
-    "title": "Pride and Prejudice",
-    "author": "Jane Austen",
+    "title": "Normal People",
+    "author": "Sally Rooney",
     "genre": "Romance",
     "city": "London",
     "contact": "jane.austen@email.com",
-    "coverImage": "https://images.unsplash.com/photo-1573875459414-3c4c6a076334?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "coverImage": "https://m.media-amazon.com/images/I/516fVq16MqL._AC_UF1000,1000_QL80_.jpg",
     "id": 2,
-    "isRented": false
+    "isRented": false,
+    "ownerId": 2
   },
   {
-    "title": "1984",
-    "author": "George Orwell",
+    "title": "The Handmaid's Tale",
+    "author": "Margaret Atwood",
     "genre": "Dystopian",
     "city": "London",
     "contact": "george.orwell@email.com",
-    "coverImage": "https://images.unsplash.com/photo-1606855033027-ca1f49145693?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "coverImage": "https://m.media-amazon.com/images/I/71K5tXyhw4L._AC_UF1000,1000_QL80_.jpg",
     "id": 3,
-    "isRented": false
+    "isRented": false,
+    "ownerId": 1
   },
   {
-    "title": "To Kill a Mockingbird",
-    "author": "Harper Lee",
+    "title": "Little Fires Everywhere",
+    "author": "Celeste Ng",
     "genre": "Classic",
     "city": "Chicago",
     "contact": "harper.lee@email.com",
-    "coverImage": "https://images.unsplash.com/photo-1585433959047-33ab85732ca0?q=80&w=1931&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "coverImage": "https://m.media-amazon.com/images/I/81MEDj9K44L._AC_UF1000,1000_QL80_.jpg",
     "id": 4,
-    "isRented": false
+    "isRented": false,
+    "ownerId": 2
   },
   {
-    "title": "The Great Gatsby",
-    "author": "F. Scott Fitzgerald",
+    "title": "Where the Crawdads Sing",
+    "author": "Delia Owens",
     "genre": "Classic",
     "city": "Los Angeles",
     "contact": "scott.fitzgerald@email.com",
-    "coverImage": "https://images.unsplash.com/photo-1638454941629-8a1102641804?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "coverImage": "https://m.media-amazon.com/images/I/81fCy47jKVL._AC_UF1000,1000_QL80_.jpg",
     "id": 5,
-    "isRented": false
+    "isRented": false,
+    "ownerId": 1
   },
   {
-    "title": "Moby Dick",
-    "author": "Herman Melville",
+    "title": "The Midnight Library",
+    "author": "Matt Haig",
     "genre": "Adventure",
     "city": "San Francisco",
     "contact": "herman.melville@email.com",
-    "coverImage": "https://images.unsplash.com/photo-1613783644787-ca1696226a7f?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "coverImage": "https://m.media-amazon.com/images/I/81F5NLTLIAL._AC_UF1000,1000_QL80_.jpg",
     "id": 6,
-    "isRented": false
+    "isRented": false,
+    "ownerId": 2
   },
   {
-    "title": "The Catcher in the Rye",
-    "author": "J.D. Salinger",
+    "title": "Eleanor Oliphant Is Completely Fine",
+    "author": "Gail Honeyman",
     "genre": "Literary",
     "city": "Boston",
     "contact": "jd.salinger@email.com",
-    "coverImage": "https://images.unsplash.com/photo-1603392854289-22c7e55cf7a9?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "coverImage": "https://m.media-amazon.com/images/I/71Es8RdDtdL._AC_UF1000,1000_QL80_.jpg",
     "id": 7,
-    "isRented": false
+    "isRented": false,
+    "ownerId": 1
   },
   {
-    "title": "The Hobbit",
-    "author": "J.R.R. Tolkien",
+    "title": "The Night Circus",
+    "author": "Erin Morgenstern",
     "genre": "Fantasy",
     "city": "New York",
     "contact": "john.doe@email.com",
-    "coverImage": "https://images.unsplash.com/photo-1606237620773-0a87b1b8f053?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "coverImage": "https://m.media-amazon.com/images/I/815sXmwRKaL._AC_UF1000,1000_QL80_.jpg",
     "id": 8,
-    "isRented": false
+    "isRented": false,
+    "ownerId": 2
   },
   {
-    "title": "The Da Vinci Code",
-    "author": "Dan Brown",
+    "title": "Gone Girl",
+    "author": "Gillian Flynn",
     "genre": "Thriller",
     "city": "Paris",
     "contact": "dan.brown@email.com",
-    "coverImage": "https://images.unsplash.com/photo-1619738749613-9a0457f2f01f?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "coverImage": "https://m.media-amazon.com/images/I/81CPLvJ76iL._AC_UF1000,1000_QL80_.jpg",
     "id": 9,
-    "isRented": false
+    "isRented": false,
+    "ownerId": 1
   },
   {
-    "title": "The Hunger Games",
-    "author": "Suzanne Collins",
+    "title": "The Book Thief",
+    "author": "Markus Zusak",
     "genre": "Young Adult",
     "city": "Los Angeles",
     "contact": "suzanne.collins@email.com",
-    "coverImage": "https://images.unsplash.com/photo-1564069170427-b40ef5a43a81?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "coverImage": "https://m.media-amazon.com/images/I/51cUjRjVXqL._AC_UF1000,1000_QL80_.jpg",
     "id": 10,
-    "isRented": false
+    "isRented": false,
+    "ownerId": 2
   },
   {
-    "title": "Harry Potter and the Sorcerer's Stone",
-    "author": "J.K. Rowling",
+    "title": "The Name of the Wind",
+    "author": "Patrick Rothfuss",
     "genre": "Fantasy",
     "city": "London",
     "contact": "jk.rowling@email.com",
-    "coverImage": "https://images.unsplash.com/photo-1604953591370-457cf697b10b?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "coverImage": "https://m.media-amazon.com/images/I/81Vl5VXhzmL._AC_UF1000,1000_QL80_.jpg",
     "id": 11,
-    "isRented": false
+    "isRented": false,
+    "ownerId": 1
   },
   {
-    "title": "The Girl with the Dragon Tattoo",
-    "author": "Stieg Larsson",
+    "title": "The Girl on the Train",
+    "author": "Paula Hawkins",
     "genre": "Mystery",
     "city": "Stockholm",
     "contact": "stieg.larsson@email.com",
-    "coverImage": "https://images.unsplash.com/photo-1619392738005-bb57fce1a1d5?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "coverImage": "https://m.media-amazon.com/images/I/51KDKfI4CAL._AC_UF1000,1000_QL80_.jpg",
     "id": 12,
-    "isRented": false
+    "isRented": false,
+    "ownerId": 2
   },
   {
-    "title": "Life of Pi",
-    "author": "Yann Martel",
+    "title": "The Martian",
+    "author": "Andy Weir",
     "genre": "Adventure",
     "city": "Toronto",
     "contact": "yann.martel@email.com",
-    "coverImage": "https://images.unsplash.com/photo-1536979850141-4ca4c7257ca3?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "coverImage": "https://m.media-amazon.com/images/I/81w505B-D-L._AC_UF1000,1000_QL80_.jpg",
     "id": 13,
-    "isRented": false
+    "isRented": false,
+    "ownerId": 1
   },
   {
-    "title": "The Alchemist",
-    "author": "Paulo Coelho",
+    "title": "The Little Prince",
+    "author": "Antoine de Saint-Exupéry",
     "genre": "Philosophical",
     "city": "Rio de Janeiro",
     "contact": "paulo.coelho@email.com",
-    "coverImage": "https://images.unsplash.com/photo-1624544609004-e922a5705551?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "coverImage": "https://m.media-amazon.com/images/I/71Ews04hTPL._AC_UF1000,1000_QL80_.jpg",
     "id": 14,
-    "isRented": false
+    "isRented": false,
+    "ownerId": 2
   },
   {
-    "title": "Sapiens: A Brief History of Humankind",
-    "author": "Yuval Noah Harari",
+    "title": "Thinking, Fast and Slow",
+    "author": "Daniel Kahneman",
     "genre": "Non-Fiction",
     "city": "Tel Aviv",
     "contact": "yuval.harari@email.com",
-    "coverImage": "https://images.unsplash.com/photo-1589827463690-04c9cf69b629?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "coverImage": "https://m.media-amazon.com/images/I/61QRnH4FGAL._AC_UF1000,1000_QL80_.jpg",
     "id": 15,
-    "isRented": false
-  },
-  {
-    "title": "Maulik's book",
-    "author": "Maulik",
-    "genre": "Romance",
-    "city": "India",
-    "contact": "maulik@gmail.com",
-    "coverImage": "",
-    "id": 16
-  },
-  {
-    "title": "new",
-    "author": "fwef",
-    "genre": "fwefw",
-    "city": "fwewef",
-    "contact": "wefwefwe",
-    "coverImage": "",
-    "id": 17
+    "isRented": false,
+    "ownerId": 1
   }
 ]

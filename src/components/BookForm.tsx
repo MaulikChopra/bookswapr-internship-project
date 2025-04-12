@@ -58,7 +58,7 @@ const BookForm: React.FC<BookFormProps> = ({ onSuccess }) => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({...data, ownerId: user?.id}),
+        body: JSON.stringify({...data, ownerId: user?.id || 1}),
       });
 
       if (!response.ok) {
@@ -69,8 +69,8 @@ const BookForm: React.FC<BookFormProps> = ({ onSuccess }) => {
       const newBook = await response.json();
 
       toast({
-        title: 'Success!',
-        description: 'Book added successfully.',
+        title: 'Book Added!',
+        description: 'Your book has been added successfully.',
       });
       setIsOpen(true);
       onSuccess(newBook);
@@ -78,7 +78,7 @@ const BookForm: React.FC<BookFormProps> = ({ onSuccess }) => {
     } catch (error: any) {
       toast({
         variant: 'destructive',
-        title: 'Error!',
+        title: 'Error adding book!',
         description: error.message || 'An error occurred while adding the book.',
       });
     } finally {
