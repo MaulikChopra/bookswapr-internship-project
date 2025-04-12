@@ -6,16 +6,22 @@ import { Icons } from './icons';
 import { useRouter } from 'next/navigation';
 import { useTheme } from 'next-themes';
 import { Button } from '@/components/ui/button';
+import { useUser } from './UserContext';
 
 const ProfileDropdown = () => {
   const router = useRouter();
   const { setTheme } = useTheme();
+  const {user, setUser} = useUser();
+
 
   const handleLogout = () => {
     // Mock logout logic
-    console.log("Logging out...");
+    localStorage.removeItem('token');
+    localStorage.removeItem('role');
+    localStorage.removeItem('user');
+    setUser(null);
     router.push('/login');
-  };
+};
 
   return (
     <DropdownMenu>

@@ -30,15 +30,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
         if (storedUser) {
             setUser(JSON.parse(storedUser));
         }
-    }, []);
-
-    useEffect(() => {
-        // Update localStorage when user changes
-        if (user) {
-            localStorage.setItem('user', JSON.stringify(user));
-        } else {
-            localStorage.removeItem('user');
-        }
+        console.log(storedUser)
     }, [user]);
 
   return (

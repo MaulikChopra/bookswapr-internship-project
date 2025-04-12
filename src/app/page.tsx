@@ -13,8 +13,8 @@ import { useUser } from '@/components/UserContext';
 const LandingPage = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const router = useRouter();
-  const {setTheme, theme, user} = useTheme();
-  const { setUser } = useUser();
+  const {setTheme, theme} = useTheme();
+  const { setUser, user } = useUser();
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -28,6 +28,7 @@ const LandingPage = () => {
         if (storedUser) {
             setUser(JSON.parse(storedUser));
         }
+        console.log(user)
   }, [router, setUser]);
 
    const handleLogout = () => {
