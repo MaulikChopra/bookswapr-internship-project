@@ -1,11 +1,15 @@
+"use client";
 
-'use client';
-
-import React from 'react';
+import React, { useContext, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+} from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
-import { useUser } from '@/components/UserContext';
+import { useUser } from "@/context/UserContext";
 
 interface ListingCardProps {
   id: string;
@@ -28,64 +32,84 @@ const ListingCard: React.FC<ListingCardProps> = ({
   location,
   coverImage,
   isRented,
+  ownerId,
   onMarkAsRented,
   onDelete,
-  ownerId
 }) => {
   const { toast } = useToast();
   const { user } = useUser();
 
   const handleMarkAsRented = async () => {
-      if (!user || user.id !== ownerId) {
-        toast({
-          variant: 'destructive',
-          title: 'Error!',
-          description: 'You are not authorized to mark this book as rented.',
-        });
-        return;
-      }
+    if (!user || user.id !== ownerId) {
+      toast({
+        variant: "destructive",
+        title: "Error!",
+        description: "You are not authorized to mark this book as rented.",
+      });
+      return;
+    }
     try {
-      const response = await fetch(`/api/books/${id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({isRented: true}),
-      });
+      //   const response = await fetch(`/api/books/${id}`, {
+      //     method: "PUT",
+      //     headers: {
+      //       "Content-Type": "application/json",
+      //     },
+      //     body: JSON.stringify({ isRented: true }),
+      //   });
 
-      if (!response.ok) {
-        throw new Error('Failed to mark book as rented');
-      }
+      //   if (!response.ok) {
+      //     throw new Error("Failed to mark book as rented");
+      //   }
 
-      toast({
-        title: 'Success!',
-        description: 'Book marked as rented successfully.',
-      });
+      //   toast({
+      //     title: "Success!",
+      //     description: "Book marked as rented successfully.",
+      //   });
       onMarkAsRented();
-
     } catch (error: any) {
-      console.error('Error marking book as rented:', error);
+      console.error("Error marking book as rented:", error);
       toast({
-        variant: 'destructive',
-        title: 'Error!',
-        description: error.message || 'An error occurred while marking the book as rented.',
+        variant: "destructive",
+        title: "Error!",
+        description:
+          error.message ||
+          "An error occurred while marking the book as rented.",
       });
     }
   };
 
   const handleDelete = () => {
-     if (!user || user.id !== ownerId) {
-        toast({
-          variant: 'destructive',
-          title: 'Error!',
-          description: 'You are not authorized to delete this book.',
-        });
-        return;
-      }
+    if (!user || user.id !== ownerId) {
+      toast({
+        variant: "destructive",
+        title: "Error!",
+        description: "You are not authorized to delete this book.",
+      });
+      return;
+    }
     onDelete(id);
   };
 
-  const isOwner = user && user.id === ownerId;
+  //make sure the user is the owner of the book
+  const isOwner = user && user.id === ownerId && user.role === "owner";
+  const [bookOwner, setBookOwner] = useState<any>(null);
+  // Fetch the book owner details
+  useEffect(() => {
+    const getOwnerDetails = async () => {
+      try {
+        const response = await fetch(`/api/user/${ownerId}`, {
+          method: "GET",
+        });
+        if (!response.ok) {
+          throw new Error("Failed to get book ownerdata");
+        }
+        const data = await response.json();
+        setBookOwner(data);
+        console.log(bookOwner);
+      } catch (err: any) {}
+    };
+    getOwnerDetails();
+  }, [ownerId]);
 
   return (
     <Card className="w-full md:w-80">
@@ -97,7 +121,8 @@ const ListingCard: React.FC<ListingCardProps> = ({
             className="w-full h-48 object-cover rounded-md"
             onError={(e: any) => {
               e.target.onerror = null; // Prevent infinite loop
-              e.target.src = "https://picsum.photos/200/300"; // Fallback image
+              e.target.src =
+                "https://www.shutterstock.com/image-vector/realistic-old-book-cover-antique-600nw-2353401503.jpg"; // Fallback image
             }}
           />
         )}
@@ -107,18 +132,21 @@ const ListingCard: React.FC<ListingCardProps> = ({
         <p className="text-gray-500">by {author}</p>
         <p className="mt-2">Genre: {genre}</p>
         <p>Location: {location}</p>
+        <p className="mt-2 font-semibold">Owned by: {bookOwner?.name}</p>
+        <p className="italic">
+          {" "}
+          {bookOwner?.phone}, {bookOwner?.username}
+        </p>
       </CardContent>
       <CardFooter className="flex justify-between p-4">
-         {isOwner && (
+        {isOwner && (
           <>
             {isRented ? (
               <Button disabled variant="destructive">
                 Rented
               </Button>
             ) : (
-              <Button onClick={handleMarkAsRented}>
-                Mark as Rented
-              </Button>
+              <Button onClick={handleMarkAsRented}>Mark as Rented</Button>
             )}
             <Button variant="outline" onClick={handleDelete}>
               Delete

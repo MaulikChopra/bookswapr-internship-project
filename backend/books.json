@@ -7,7 +7,7 @@
     "contact": "john.doe@email.com",
     "coverImage": "https://m.media-amazon.com/images/I/51w479yV9QL._AC_UF1000,1000_QL80_.jpg",
     "id": 1,
-    "isRented": false,
+    "isRented": true,
     "ownerId": 1
   },
   {
@@ -18,8 +18,8 @@
     "contact": "jane.austen@email.com",
     "coverImage": "https://m.media-amazon.com/images/I/516fVq16MqL._AC_UF1000,1000_QL80_.jpg",
     "id": 2,
-    "isRented": false,
-    "ownerId": 2
+    "isRented": true,
+    "ownerId": 1
   },
   {
     "title": "The Handmaid's Tale",
@@ -41,7 +41,7 @@
     "coverImage": "https://m.media-amazon.com/images/I/81MEDj9K44L._AC_UF1000,1000_QL80_.jpg",
     "id": 4,
     "isRented": false,
-    "ownerId": 2
+    "ownerId": 1
   },
   {
     "title": "Where the Crawdads Sing",
@@ -63,7 +63,7 @@
     "coverImage": "https://m.media-amazon.com/images/I/81F5NLTLIAL._AC_UF1000,1000_QL80_.jpg",
     "id": 6,
     "isRented": false,
-    "ownerId": 2
+    "ownerId": 1
   },
   {
     "title": "Eleanor Oliphant Is Completely Fine",
@@ -85,7 +85,7 @@
     "coverImage": "https://m.media-amazon.com/images/I/815sXmwRKaL._AC_UF1000,1000_QL80_.jpg",
     "id": 8,
     "isRented": false,
-    "ownerId": 2
+    "ownerId": 1
   },
   {
     "title": "Gone Girl",
@@ -107,7 +107,7 @@
     "coverImage": "https://m.media-amazon.com/images/I/51cUjRjVXqL._AC_UF1000,1000_QL80_.jpg",
     "id": 10,
     "isRented": false,
-    "ownerId": 2
+    "ownerId": 1
   },
   {
     "title": "The Name of the Wind",
@@ -129,7 +129,7 @@
     "coverImage": "https://m.media-amazon.com/images/I/51KDKfI4CAL._AC_UF1000,1000_QL80_.jpg",
     "id": 12,
     "isRented": false,
-    "ownerId": 2
+    "ownerId": 1
   },
   {
     "title": "The Martian",
@@ -151,7 +151,7 @@
     "coverImage": "https://m.media-amazon.com/images/I/71Ews04hTPL._AC_UF1000,1000_QL80_.jpg",
     "id": 14,
     "isRented": false,
-    "ownerId": 2
+    "ownerId": 1
   },
   {
     "title": "Thinking, Fast and Slow",

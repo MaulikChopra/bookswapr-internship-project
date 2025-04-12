@@ -1,44 +1,37 @@
-'use client';
+"use client";
 
-import {Button} from '@/components/ui/button';
-import Link from 'next/link';
-import React from 'react';
-import {useEffect, useState} from 'react';
-import {useRouter} from 'next/navigation';
-import {Icons} from "@/components/icons";
-import {useTheme} from "next-themes";
-import Image from 'next/image';
-import { useUser } from '@/components/UserContext';
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import React from "react";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { Icons } from "@/components/icons";
+import { useTheme } from "next-themes";
+import Image from "next/image";
+import { useUser } from "@/context/UserContext";
 
 const LandingPage = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const router = useRouter();
-  const {setTheme, theme} = useTheme();
+  const { setTheme, theme } = useTheme();
   const { setUser, user } = useUser();
 
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      setIsLoggedIn(true);
-    } else {
-      setIsLoggedIn(false);
-    }
+  // useEffect(() => {
+  //   const storedUser = localStorage.getItem("user");
+  //   if (storedUser) {
+  //     setUser(JSON.parse(storedUser));
+  //   }
+  //   console.log(user);
+  // }, [router, setUser]);
 
-    const storedUser = localStorage.getItem('user');
-        if (storedUser) {
-            setUser(JSON.parse(storedUser));
-        }
-        console.log(user)
-  }, [router, setUser]);
-
-   const handleLogout = () => {
-        localStorage.removeItem('token');
-        localStorage.removeItem('role');
-        localStorage.removeItem('user');
-        setIsLoggedIn(false);
-        setUser(null);
-        router.push('/login');
-    };
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("role");
+    localStorage.removeItem("user");
+    setIsLoggedIn(false);
+    setUser(null);
+    router.push("/login");
+  };
 
   return (
     <div className="bg-background min-h-screen flex flex-col">
@@ -62,21 +55,26 @@ const LandingPage = () => {
               </li>
               <li>
                 {theme === "light" ? (
-                  <Button variant="ghost" size="icon" onClick={() => setTheme("dark")}>
-                    <Icons.dark className="h-4 w-4"/>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => setTheme("dark")}
+                  >
+                    <Icons.dark className="h-4 w-4" />
                   </Button>
                 ) : (
-                  <Button variant="ghost" size="icon" onClick={() => setTheme("light")}>
-                    <Icons.light className="h-4 w-4"/>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => setTheme("light")}
+                  >
+                    <Icons.light className="h-4 w-4" />
                   </Button>
                 )}
               </li>
               {isLoggedIn ? (
                 <li>
-                 <Button
-                    variant="outline"
-                    onClick={handleLogout}
-                  >
+                  <Button variant="outline" onClick={handleLogout}>
                     Logout
                   </Button>
                 </li>
@@ -95,8 +93,14 @@ const LandingPage = () => {
                 </>
               )}
               {isLoggedIn && user && (
-                 <li>
-                  <Link href={user.role === 'seeker' ? '/dashboard/seeker' : '/dashboard/owner'}>
+                <li>
+                  <Link
+                    href={
+                      user.role === "seeker"
+                        ? "/dashboard/seeker"
+                        : "/dashboard/owner"
+                    }
+                  >
                     <Button variant="default">Dashboard</Button>
                   </Link>
                 </li>
@@ -117,11 +121,11 @@ const LandingPage = () => {
             read. Share, exchange, and explore new literary adventures.
           </p>
           <div className="space-x-4">
-            <Link href="/d">
-              <Button variant="default">Browse Books</Button>
+            <Link href="/login">
+              <Button variant="default">Login</Button>
             </Link>
             <Link href="/signup">
-              <Button variant="secondary">List Your Books</Button>
+              <Button variant="secondary">Sign Up</Button>
             </Link>
           </div>
         </div>
@@ -171,7 +175,7 @@ const LandingPage = () => {
                 book enthusiasts.
               </p>
               <Image
-                src="https://images.unsplash.com/photo-1485230895905-ec33b3f8bc63?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                src="https://plus.unsplash.com/premium_photo-1663099585867-10856399b02b?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8Ym9vayUyMHNoYXJpbmd8ZW58MHx8MHx8fDA%3D"
                 alt="Feature 2"
                 width={500}
                 height={300}
@@ -184,11 +188,11 @@ const LandingPage = () => {
                 Connect with Bookworms
               </h3>
               <p className="text-muted-foreground">
-                Build meaningful connections with like-minded readers and
-                expand your literary horizons.
+                Build meaningful connections with like-minded readers and expand
+                your literary horizons.
               </p>
               <Image
-                src="https://images.unsplash.com/photo-1517842067814-9c0dca28b23c?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                src="https://images.unsplash.com/photo-1660128359777-c7e5f29e4106?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fGJvb2slMjBzaGFyaW5nfGVufDB8fDB8fHww"
                 alt="Feature 3"
                 width={500}
                 height={300}
@@ -255,8 +259,8 @@ const LandingPage = () => {
             Ready to Dive In?
           </h2>
           <p className="text-lg text-muted-foreground mb-12">
-            Join BookSwapr today and become part of a thriving community of
-            book lovers. Start exploring, sharing, and connecting now!
+            Join BookSwapr today and become part of a thriving community of book
+            lovers. Start exploring, sharing, and connecting now!
           </p>
           <div className="space-x-4">
             <Link href="/login">

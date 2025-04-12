@@ -1,11 +1,15 @@
-'use client';
+"use client";
 
-import { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useContext, useState, useEffect } from "react";
 
 // Define the user type
 type User = {
   id: number;
   role: string;
+
+  username: string;
+  name: string;
+  phone: string;
 };
 
 // Define the context type
@@ -25,13 +29,13 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
-        // Load user from localStorage on component mount
-        const storedUser = localStorage.getItem('user');
-        if (storedUser) {
-            setUser(JSON.parse(storedUser));
-        }
-        console.log(storedUser)
-    }, [user]);
+    // Load user from localStorage on component mount
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+    console.log(storedUser);
+  }, []);
 
   return (
     <UserContext.Provider value={{ user, setUser }}>

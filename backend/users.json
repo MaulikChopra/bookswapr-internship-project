@@ -14,5 +14,13 @@
     "phone": "32423423423",
     "role": "seeker",
     "id": 2
+  },
+  {
+    "username": "test2",
+    "password": "$2b$10$hYBx3YZfRy4wK7pEEyNJ.eEAJ/C8//7mE9MwuFJS7zK8jCjUpkR9O",
+    "name": "test2",
+    "phone": "838383838",
+    "role": "seeker",
+    "id": 3
   }
 ]
