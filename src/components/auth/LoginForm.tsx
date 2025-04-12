@@ -52,10 +52,13 @@ const LoginForm = () => {
         localStorage.setItem('token', data.token);
         localStorage.setItem('role', data.role);
 
-        setUser({
+        const user = {
           id: data.userId,
           role: data.role
-        });
+        };
+
+        localStorage.setItem('user', JSON.stringify(user));
+        setUser(user);
 
         toast({
           title: "Login Successful",

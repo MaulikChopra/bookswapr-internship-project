@@ -33,7 +33,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
 }) => {
   const { toast } = useToast();
   const { user } = useUser();
-
+console.log(user)
   const handleMarkAsRented = async () => {
       if (!user || user.id !== ownerId) {
         toast({
@@ -85,6 +85,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
   };
 
   const isOwner = user && user.id === ownerId;
+  console.log(isOwner)
 
   return (
     <Card className="w-full md:w-80">

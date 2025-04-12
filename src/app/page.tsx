@@ -8,11 +8,13 @@ import {useRouter} from 'next/navigation';
 import {Icons} from "@/components/icons";
 import {useTheme} from "next-themes";
 import Image from 'next/image';
+import { useUser } from '@/components/UserContext';
 
 const LandingPage = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const router = useRouter();
-  const {setTheme, theme} = useTheme();
+  const {setTheme, theme, user} = useTheme();
+  const { setUser } = useUser();
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -21,7 +23,21 @@ const LandingPage = () => {
     } else {
       setIsLoggedIn(false);
     }
-  }, [router]);
+
+    const storedUser = localStorage.getItem('user');
+        if (storedUser) {
+            setUser(JSON.parse(storedUser));
+        }
+  }, [router, setUser]);
+
+   const handleLogout = () => {
+        localStorage.removeItem('token');
+        localStorage.removeItem('role');
+        localStorage.removeItem('user');
+        setIsLoggedIn(false);
+        setUser(null);
+        router.push('/login');
+    };
 
   return (
     <div className="bg-background min-h-screen flex flex-col">
@@ -54,7 +70,16 @@ const LandingPage = () => {
                   </Button>
                 )}
               </li>
-              {!isLoggedIn && (
+              {isLoggedIn ? (
+                <li>
+                 <Button
+                    variant="outline"
+                    onClick={handleLogout}
+                  >
+                    Logout
+                  </Button>
+                </li>
+              ) : (
                 <>
                   <li>
                     <Link href="/login" className="hover:text-accent">
@@ -68,19 +93,11 @@ const LandingPage = () => {
                   </li>
                 </>
               )}
-              {isLoggedIn && (
-                <li>
-                  <Button
-                    variant="outline"
-                    onClick={() => {
-                      localStorage.removeItem('token');
-                      localStorage.removeItem('role');
-                      setIsLoggedIn(false);
-                      router.push('/login');
-                    }}
-                  >
-                    Logout
-                  </Button>
+              {isLoggedIn && user && (
+                 <li>
+                  <Link href={user.role === 'seeker' ? '/dashboard/seeker' : '/dashboard/owner'}>
+                    <Button variant="default">Dashboard</Button>
+                  </Link>
                 </li>
               )}
             </ul>
